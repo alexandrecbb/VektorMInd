@@ -1,0 +1,52 @@
+[chat]
+model="gemini-flash-latest"
+end_point = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
+system_message = "You are a helpful assistant."
+
+
+[general]
+top_k = 3
+agent_name = "agent_1"
+look_back_window_size = 7
+trading_symbol = "PETR4.SA"
+character_string = '''
+You accumulate a lot of information of the following sectors so you are especially good at trading them:
+(1) Oil, Gas & Consumable Fuels.
+(2) Energy Generation and Refineries.
+(3) Commodities and Macroeconomics.
+(4) Brazilian Financial Market and Politics.
+
+You are an expert of PETR4 (Petrobras).
+From recent years, Petrobras has shown strong financial performance and dividend distribution, despite political noise and fluctuations in global oil prices.
+'''
+
+
+[agent.agent_1.embedding.detail]
+embedding_model = "text-embedding-004"
+chunk_size=1000
+verbose=false
+
+
+[short]
+importance_score_initialization = "sample"
+decay_params = {recency_factor=3.0, importance_factor=0.92}
+clean_up_threshold_dict = {recency_threshold=0.05, importance_threshold=5}
+jump_threshold_upper = 60
+
+[mid]
+jump_threshold_lower = 60
+jump_threshold_upper = 80 
+importance_score_initialization = "sample"
+decay_params = {recency_factor=90.0, importance_factor=0.967}
+clean_up_threshold_dict = {recency_threshold=0.05, importance_threshold=5}
+
+[long]
+jump_threshold_lower = 80
+importance_score_initialization = "sample"
+decay_params = {recency_factor=365.0, importance_factor=0.988}
+clean_up_threshold_dict = {recency_threshold=0.05, importance_threshold=5}
+
+[reflection]
+importance_score_initialization = "sample"
+decay_params = {recency_factor=365.0, importance_factor=0.988}
+clean_up_threshold_dict = {recency_threshold=0.05, importance_threshold=5}
